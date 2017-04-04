@@ -14,13 +14,14 @@ import pickahu.customview.circleProgressBar.CircleProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
+    private VerificationCode code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        VerificationCode code = (VerificationCode) findViewById(R.id.code);
+        code = (VerificationCode) findViewById(R.id.code);
 
         code.setText("8888").setBgColor(Color.BLUE).setTextSize(26);
 
