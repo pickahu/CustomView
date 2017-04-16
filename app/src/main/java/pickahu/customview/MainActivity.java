@@ -1,60 +1,43 @@
 package pickahu.customview;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import pickahu.customview.ImageAndDes.ImageDes;
-import pickahu.customview.VerificationCode.ui.OnDataChangeListener;
-import pickahu.customview.VerificationCode.ui.VerificationCode;
-import pickahu.customview.circleProgressBar.CircleProgressBar;
+import pickahu.customview.volControl.VolView;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private VerificationCode code;
+
+    private VolView mVolView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        code = (VerificationCode) findViewById(R.id.code);
+        mVolView = (VolView)findViewById(R.id.vol);
+    }
 
-        code.setText("8888").setBgColor(Color.BLUE).setTextSize(26);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        code.setOnDataChangedListener(new OnDataChangeListener() {
-            @Override
-            public void onDataChanged(String data) {
-                Log.e("VerificationCode", data);
-                Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
-            }
-        });
+        switch (keyCode)
+        {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Toast.makeText(MainActivity.this,"down",Toast.LENGTH_SHORT).show();
+                mVolView.down();
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Toast.makeText(MainActivity.this,"up",Toast.LENGTH_SHORT).show();
+                mVolView.up();
+                return true;
+        }
 
-        ImageDes imageDes = (ImageDes) findViewById(R.id.imagedes);
-        imageDes.setText("风景不错哦").setImage(R.drawable.fengjing);
-
-
-        final CircleProgressBar circleProgress = (CircleProgressBar) findViewById(R.id.cicle_progress);
-        circleProgress.setCircleRadius(50);
-
-
-
-        new Thread() {
-            @Override
-            public void run() {
-
-                for (int i = 0; i <= 100; i++) {
-                    try {
-                        Thread.sleep(100);
-                        circleProgress.setProgress(i);
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }.start();
+        return super.onKeyDown(keyCode, event);
 
     }
 }
